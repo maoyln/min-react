@@ -37,7 +37,8 @@ import React from './core/React';
  * 转换需要使用React（此处我们使用的是我们重写的React.createElement(...)）
  */
 
-import App from './App'
 // 没有支持function component 不能直接使用
 // error信息【Uncaught DOMException: Failed to execute 'createElement' on 'Document': The tag name provided ('[object Object]') is not a valid name.】
-ReactDOM.createRoot(document.querySelector("#root")).render(<App></App>);
+const App = React.createElement('div', {id: 'app'}, 'hello ');
+
+ReactDOM.createRoot(document.querySelector("#root")).render(App);
