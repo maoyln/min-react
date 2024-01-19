@@ -30,6 +30,7 @@ function render(el, container) {
     },
   };
 
+  // 跟节点
   root = nextWorkOfUnit;
 }
 
@@ -40,6 +41,7 @@ function workLoop(deadline) {
   while (!shouldYield && nextWorkOfUnit) {
     nextWorkOfUnit = performWorkOfUnit(nextWorkOfUnit);
 
+    console.log(deadline.timeRemaining(), 'deadline.timeRemaining()--12');
     shouldYield = deadline.timeRemaining() < 1;
   }
 
@@ -106,6 +108,7 @@ function initChildren(fiber, children) {
 }
 
 function updateFunctionComponent(fiber) {
+  console.log(fiber, 'fiber--12');
   const children = [fiber.type(fiber.props)];
 
   initChildren(fiber, children);
