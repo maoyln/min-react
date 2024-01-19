@@ -81,12 +81,20 @@ function createDom(type) {
 function updateProps(dom, props) {
   Object.keys(props).forEach((key) => {
     if (key !== "children") {
-      dom[key] = props[key];
+      // 增加事件-例如：click
+      if (key.startsWith('on')) {
+        // 例如：onClick -> click
+        const eventType = key.slice(2).toLowerCase();
+        dom.addEventListener(eventType, props[key])
+      } else {
+        dom[key] = props[key];
+      }
     }
   });
 }
 
 function initChildren(fiber, children) {
+  console.log(fiber);
   let prevChild = null;
   children.forEach((child, index) => {
     const newFiber = {

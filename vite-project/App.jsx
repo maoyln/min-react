@@ -41,7 +41,15 @@ import React from './core/React';
  * V3 整理App+props
  */
 function Counter({num}) {
-    return <div>count: {num}</div>
+    const handleClick = () => {
+        console.log('点击事件！');
+    }
+    return (
+        <div>
+            count： {num}
+            <button onClick={handleClick}>click</button>
+        </div>
+    )
 }
 
 function counterContainer() {
