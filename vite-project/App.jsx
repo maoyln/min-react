@@ -76,7 +76,7 @@ let props = { id: 'myl' }
 function Counter() {
     const handleClick = () => {
         count++;
-        props = {}
+        props = {}; // 验证删除
         console.log('点击事件！');
         React.update();
     }
