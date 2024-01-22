@@ -40,13 +40,47 @@ import React from './core/React';
 /**
  * V3 整理App+props
  */
-function Counter({num}) {
+// function Counter({num}) {
+//     const handleClick = () => {
+//         console.log('点击事件！');
+//     }
+//     return (
+//         <div>
+//             count： {num}
+//             <button onClick={handleClick}>click</button>
+//         </div>
+//     )
+// }
+
+// function counterContainer() {
+//     return <Counter></Counter>
+// }
+
+// function App() {
+//     return (
+//         <div>
+//             min-react
+//             <Counter num={10} />
+//             <Counter num={20} />
+//         </div>
+//     );
+// }
+
+/*******************分割线***********************/
+
+/**
+ * V4 新增更新
+ */
+let count = 10;
+function Counter() {
     const handleClick = () => {
+        count++;
         console.log('点击事件！');
+        React.update();
     }
     return (
         <div>
-            count： {num}
+            count： {count}
             <button onClick={handleClick}>click</button>
         </div>
     )
