@@ -72,14 +72,16 @@ import React from './core/React';
  * V4 新增更新
  */
 let count = 10;
+let props = { id: 'myl' }
 function Counter() {
     const handleClick = () => {
         count++;
+        props = {}
         console.log('点击事件！');
         React.update();
     }
     return (
-        <div>
+        <div {...props}>
             count： {count}
             <button onClick={handleClick}>click</button>
         </div>
