@@ -23,18 +23,18 @@ function createElement(type, props, ...children) {
 }
 
 function render(el, container) {
-  nextWorkOfUnit = {
+  wipRoot = {
     dom: container,
     props: {
       children: [el],
     },
   };
 
-  // 跟节点
-  root = nextWorkOfUnit;
+  // 根节点
+  nextWorkOfUnit = wipRoot;
 }
 
-let root = null;
+let wipRoot = null;
 let currentRoot = null;
 let nextWorkOfUnit = null;
 function workLoop(deadline) {
@@ -46,7 +46,7 @@ function workLoop(deadline) {
     shouldYield = deadline.timeRemaining() < 1;
   }
 
-  if (!nextWorkOfUnit && root) {
+  if (!nextWorkOfUnit && wipRoot) {
     commitRoot();
   }
 
@@ -54,10 +54,10 @@ function workLoop(deadline) {
 }
 
 function commitRoot() {
-  commitWork(root.child);
+  commitWork(wipRoot.child);
   // 在清空之前创建currentRoot, 把odlRoot记录下来
-  currentRoot = root;
-  root = null;
+  currentRoot = wipRoot;
+  wipRoot = null;
 }
 
 function commitWork(fiber) {
@@ -126,10 +126,9 @@ function updateProps(dom, nextProps, prevProps) {
   })
 }
 
-function initChildren(fiber, children) {
+function reconcileChildren(fiber, children) {
   // 获取老的fiber
   let oldFiber = fiber.alternate?.child;
-
 
   let prevChild = null;
   children.forEach((child, index) => {
@@ -179,7 +178,7 @@ function updateFunctionComponent(fiber) {
   console.log(fiber, 'fiber--12');
   const children = [fiber.type(fiber.props)];
 
-  initChildren(fiber, children);
+  reconcileChildren(fiber, children);
 }
 
 function updateHostComponent(fiber) {
@@ -190,7 +189,7 @@ function updateHostComponent(fiber) {
   }
 
   const children = fiber.props.children;
-  initChildren(fiber, children);
+  reconcileChildren(fiber, children);
 }
 
 function performWorkOfUnit(fiber) {
@@ -218,14 +217,14 @@ requestIdleCallback(workLoop);
 
 // 更新
 function update() {
-  nextWorkOfUnit = {
+  wipRoot = {
     dom: currentRoot,
     props: currentRoot.props,
     alternate: currentRoot
   };
 
   // 跟节点
-  root = nextWorkOfUnit;
+  nextWorkOfUnit = wipRoot;
 }
 
 const React = {
